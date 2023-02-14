@@ -124,3 +124,7 @@
 .gameplay-img {
   width: 100vw;
 }
+
+.found {
+  opacity: .4;
+}
