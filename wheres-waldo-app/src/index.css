@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --main-red: rgb(252, 90, 90);
+  --main-white: rgb(240, 248, 255);
+}
+
+.header-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  background-color: aliceblue;
+  height: 90px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 15px;
+}
+
+.goback-header-btn {
+  position: absolute;
+  left: 10px;
+  top: 30%;
+  text-decoration: none;
+  background-color: var(--main-red);
+  color: var(--main-white);
+  padding: 10px 30px;
+  border-radius: 10px;
+}
+
+.pic-to-find {
+  position: absolute;
+  right: 10px;
+  top: 20%;
+}
+
+.char-to-find {
+  margin-left: 10px;
+  height: 50px;
+  width: 50px;
+}
+
+.title_img {
+  height: 80px;
+}
+
+.title_logo {
+  height: 80px;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.error-img {
+  width: 50vw;
+}
+
+.goback-btn {
+  background-color: var(--main-white);
+  text-decoration: none;
+  padding: 20px 30px;
+  border-radius: 10px;
+}
+
+.leaderboard-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  background-color: var(--main-white);
+  align-items: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.leaderboard-btn {
+  border: transparent;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--main-red);
+  font-size: large;
+}
+
+.red {
+  color: var(--main-red);
+}
+
+.levels-container {
+  padding: 100px 50px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.level-link {
+  text-decoration: none;
+  color: black;
+}
+
+.level-container {
+  border-radius: 10px;
+  transition: all 0.3s;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.level-container:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.level-title {
+  padding: 15px;
+}
+
+.main-level-cover {
+  width: 450px;
+  height: 300px
+}
+
+.gameplay-img {
+  width: 100vw;
+}
