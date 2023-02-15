@@ -4,7 +4,7 @@ import useTimer from "../custom_hooks/useTimer";
 
 const Header = () => {
   const { isPlaying, play } = useGlobalContext();
-  const time = useTimer();
+  // const time = useTimer();
 
   return (
     <div className="header-container">
@@ -13,7 +13,7 @@ const Header = () => {
           <Link to={"/"} onClick={() => play(0)} className="goback-header-btn">
             Back home
           </Link>
-          Time: {time}
+          {/* Time: {time} */}
           <div className="pic-to-find">
             {isPlaying.selectedLevel.toFind.map((char, id) => {
               return (

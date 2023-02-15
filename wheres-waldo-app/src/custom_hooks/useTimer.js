@@ -6,6 +6,7 @@ const useTimer = () => {
 
   useEffect(() => {
     setRestart(true);
+    // eslint-disable-next-line
   }, [window.location.href]);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const useTimer = () => {
     } else {
       setTimer({ minutes: timer.minutes + 1, seconds: 0 });
     }
+    // eslint-disable-next-line
   }, [timer]);
   return (
     <span>

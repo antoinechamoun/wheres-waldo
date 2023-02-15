@@ -125,6 +125,22 @@
   width: 100vw;
 }
 
+.game-container:hover {
+  cursor: url('./images/custom-cursor.svg'), auto;
+}
+
 .found {
   opacity: .4;
+}
+
+.modal-container {
+  z-index: 1000;
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+}
+
+.char-btn {
+  display: block;
+  cursor: pointer;
 }
