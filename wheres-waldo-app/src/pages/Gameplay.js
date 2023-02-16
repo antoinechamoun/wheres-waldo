@@ -1,35 +1,25 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Modal from "../components/Modal";
 import { useGlobalContext } from "../context/context";
 
 const Gameplay = () => {
-  // const { level } = useParams();
-  const { isPlaying } = useGlobalContext();
+  const { isPlaying, changeCoords, currentCoords } = useGlobalContext();
   const imageRef = useRef(null);
-  const [cuurentCoords, setCurrentCoords] = useState();
-  const [modalCoords, setModalCoords] = useState({
-    x: 0,
-    y: 0,
-    isShown: false,
-  });
 
   const checkFound = (e) => {
-    setCurrentCoords({
-      x: e.pageX / imageRef.current.width,
-      y: (e.pageY - 90) / imageRef.current.height,
-    });
-    setModalCoords({ x: e.pageX, y: e.pageY, isShown: true });
+    changeCoords({ x: e.pageX, y: e.pageY }, true);
   };
 
   return (
     <div className="game-container">
-      {modalCoords.isShown ? (
+      {currentCoords.isShown && (
         <Modal
-          coords={modalCoords}
-          char={isPlaying.selectedLevel}
-          cuurentCoords={cuurentCoords}
+          imgSize={{
+            width: imageRef.current.width,
+            height: imageRef.current.height,
+          }}
         />
-      ) : null}
+      )}
       <img
         ref={imageRef}
         src={isPlaying.selectedLevel.path}

@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useLocalStorage from "../custom_hooks/useLocalStorage";
+import useTimer from "../custom_hooks/useTimer";
 
 export const AppContext = React.createContext();
 
@@ -25,34 +26,52 @@ export const AppProvider = ({ children }) => {
           name: "waldo",
           url: "/waldo.jpg",
           isFound: false,
-          coords: { minX: 0.47, maxX: 0.51, minY: 0.41, maxY: 0.51 },
+          coords: { minX: 0.5, maxX: 0.6, minY: 0.45, maxY: 0.65 },
         },
         {
           name: "odlaw",
           url: "/odlaw.jpg",
           isFound: false,
-          coords: { minX: 0.19, maxX: 0.21, minY: 0.4, maxY: 0.52 },
+          coords: { minX: 0.19, maxX: 0.28, minY: 0.45, maxY: 0.58 },
         },
         {
           name: "wizard",
           url: "/wizard.jpg",
           isFound: false,
-          coords: { minX: 0.57, maxX: 0.61, minY: 0.41, maxY: 0.48 },
+          coords: { minX: 0.57, maxX: 0.65, minY: 0.4, maxY: 0.6 },
         },
       ],
     },
   ];
-
-  const [charToFind, setCharToFind] = useLocalStorage("char", "hi");
-
   const [isPlaying, setIsPlaying] = useLocalStorage("isPlaying", {
     isPlaying: false,
     level: 0,
     timer: 0,
   });
+  const [currentCoords, setCurrentCoords] = useState({
+    x: 0,
+    y: 0,
+    isShown: false,
+  });
+  const [didWin, setDidWin] = useState(false);
 
-  const selectChar = (char) => {
-    setCharToFind(char);
+  const changeCoords = (coords, show) => {
+    setCurrentCoords({ x: coords.x, y: coords.y, isShown: show });
+  };
+
+  const findChar = (name) => {
+    let selectedLevelNew = isPlaying.selectedLevel.toFind.map((char) => {
+      if (char.name === name) {
+        return { ...char, isFound: true };
+      }
+      return char;
+    });
+    setIsPlaying({
+      isPlaying: true,
+      selectedLevel: { ...isPlaying.selectedLevel, toFind: selectedLevelNew },
+      timer: 0,
+    });
+    changeCoords({ x: 0, y: 0, isShown: false });
   };
 
   const play = (selectedLevel) => {
@@ -67,9 +86,35 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const time = useTimer();
+
+  const checkWin = () => {
+    const numOfFoundChar =
+      isPlaying.isPlaying &&
+      isPlaying.selectedLevel.toFind.filter((char) => char.isFound === true)
+        .length;
+    const numOfToFoundChar =
+      isPlaying.isPlaying && isPlaying.selectedLevel.toFind.length;
+    numOfFoundChar && numOfFoundChar === numOfToFoundChar && setDidWin(true);
+  };
+
+  useEffect(() => {
+    checkWin();
+  }, [isPlaying, didWin]);
+
   return (
     <AppContext.Provider
-      value={{ levels, play, isPlaying, selectChar, charToFind }}>
+      value={{
+        levels,
+        play,
+        isPlaying,
+        currentCoords,
+        changeCoords,
+        findChar,
+        didWin,
+        setDidWin,
+        time,
+      }}>
       {children}
     </AppContext.Provider>
   );

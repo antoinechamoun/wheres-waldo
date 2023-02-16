@@ -126,7 +126,7 @@
 }
 
 .game-container:hover {
-  cursor: url('./images/custom-cursor.svg'), auto;
+  cursor: url('./images/custom-cursor.svg') 50 50, auto;
 }
 
 .found {
