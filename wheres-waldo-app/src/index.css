@@ -70,7 +70,7 @@
 }
 
 .leaderboard-container {
-  margin-top: 100px;
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
   padding: 20px 50px;
@@ -85,6 +85,16 @@
   border-radius: 10px;
   background-color: var(--main-red);
   font-size: large;
+}
+
+.levels {
+  margin: 20px;
+}
+
+.person-score {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .red {
@@ -143,4 +153,29 @@
 .char-btn {
   display: block;
   cursor: pointer;
+}
+
+.winner-modal-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner-winner-modal-container {
+  z-index: 3000;
+  width: 180px;
+  height: 100px;
+  background-color: aliceblue;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.inner-winner-modal-container>h3 {
+  margin-bottom: 20px;
 }

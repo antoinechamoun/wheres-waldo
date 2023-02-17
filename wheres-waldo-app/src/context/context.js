@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import useLocalStorage from "../custom_hooks/useLocalStorage";
+import useModal from "../custom_hooks/useModal";
 import useTimer from "../custom_hooks/useTimer";
 
 export const AppContext = React.createContext();
@@ -54,6 +55,10 @@ export const AppProvider = ({ children }) => {
     isShown: false,
   });
   const [didWin, setDidWin] = useState(false);
+  const { isShowing, show, hide } = useModal();
+  const [winnerName, setWinnerName] = useState("");
+  const [winnerTime, setWinnerTime] = useState("");
+  const time = useTimer();
 
   const changeCoords = (coords, show) => {
     setCurrentCoords({ x: coords.x, y: coords.y, isShown: show });
@@ -77,6 +82,7 @@ export const AppProvider = ({ children }) => {
   const play = (selectedLevel) => {
     if (selectedLevel === 0) {
       setIsPlaying({ isPlaying: false, selectedLevel: 0, timer: 0 });
+      hide();
     } else {
       setIsPlaying({
         isPlaying: true,
@@ -86,8 +92,6 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const time = useTimer();
-
   const checkWin = () => {
     const numOfFoundChar =
       isPlaying.isPlaying &&
@@ -95,11 +99,19 @@ export const AppProvider = ({ children }) => {
         .length;
     const numOfToFoundChar =
       isPlaying.isPlaying && isPlaying.selectedLevel.toFind.length;
-    numOfFoundChar && numOfFoundChar === numOfToFoundChar && setDidWin(true);
+    if (numOfFoundChar && numOfFoundChar === numOfToFoundChar) {
+      setDidWin(true);
+      show();
+      setWinnerTime({
+        min: time.props.children[0],
+        sec: Number.parseInt(time.props.children[2]),
+      });
+    }
   };
 
   useEffect(() => {
     checkWin();
+    // eslint-disable-next-line
   }, [isPlaying, didWin]);
 
   return (
@@ -114,6 +126,12 @@ export const AppProvider = ({ children }) => {
         didWin,
         setDidWin,
         time,
+        isShowing,
+        show,
+        hide,
+        winnerName,
+        setWinnerName,
+        winnerTime,
       }}>
       {children}
     </AppContext.Provider>

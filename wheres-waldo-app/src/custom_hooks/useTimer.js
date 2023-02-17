@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 const useTimer = () => {
   const [timer, setTimer] = useState({ minutes: 0, seconds: 0 });
   const [restart, setRestart] = useState(false);
-
   useEffect(() => {
     setRestart(true);
     // eslint-disable-next-line

@@ -1,9 +1,11 @@
 import { useRef } from "react";
 import Modal from "../components/Modal";
+import WinModal from "../components/WinModal";
 import { useGlobalContext } from "../context/context";
 
 const Gameplay = () => {
-  const { isPlaying, changeCoords, currentCoords } = useGlobalContext();
+  const { isPlaying, changeCoords, currentCoords, isShowing } =
+    useGlobalContext();
   const imageRef = useRef(null);
 
   const checkFound = (e) => {
@@ -27,6 +29,7 @@ const Gameplay = () => {
         className="gameplay-img"
         onClick={(e) => checkFound(e)}
       />
+      {isShowing && <WinModal />}
     </div>
   );
 };

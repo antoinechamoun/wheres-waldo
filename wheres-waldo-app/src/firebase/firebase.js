@@ -3,8 +3,11 @@ import { initializeApp } from "firebase/app";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
+  limit,
+  orderBy,
   query,
   setDoc,
 } from "firebase/firestore/lite";
@@ -25,9 +28,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export const addScore = async (time, name) => {
+export const checkIfUnique = async (level, name) => {
+  const docRef = doc(db, level.toString(), name);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return true;
+  } else return false;
+};
+
+export const addScore = async (level, name, time) => {
   try {
-    await setDoc(doc(db, "scores"), {
+    await setDoc(doc(db, level.toString(), name), {
       name: name,
       score: time,
     });
@@ -36,13 +47,13 @@ export const addScore = async (time, name) => {
   }
 };
 
-export const displayScores = async () => {
-  const q = query(collection(db, "scores"));
+export const displayScores = async (level) => {
+  const q = query(collection(db, level.toString()), orderBy("score"), limit(3));
 
   let scores = [];
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    scores = [...scores, { name: doc.data().name, score: doc.data().time }];
+    scores = [...scores, { name: doc.data().name, score: doc.data().score }];
   });
   return scores;
 };
